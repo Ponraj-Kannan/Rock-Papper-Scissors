@@ -49,7 +49,7 @@
         }
 
         .game-info > img:hover {
-            background-color: #5b3d83;
+            background-color: #5b3d83d3;
         }
 
         .choice {
@@ -128,11 +128,17 @@
             font-size: 1.5rem;
         }
 
+        @media only screen and (max-width: 400px) {
+            body {
+                height: 80vh;
+            }
+        }
+
     </style>
 </head>
 <body>
     <div class="game-container poppins-regular">
-        <h3 class="poppins-medium" style="color:  #5b3d83;">Rock Papper Scissors</h3>
+        <h3 class="poppins-medium">Rock Papper Scissors</h3>
         <div class="game-info">
             <img src="./assets/rock-emoji.png" onclick="play('Rock')">
             <img src="./assets/paper-emoji.png" onclick="play('Papper')">
