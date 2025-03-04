@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Papper Scissors</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins:wght@300;400;500&display=swap');
+        body {
+            padding: 0;
+            margin: 0;
+            
+            width: 100%;
+            height: 100vh;
+            background-color: #121212;
+            color: beige;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-container {
+            min-width: 40%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-info {
+            width: 100%;
+            height: 100px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-info > img {
+            height: 40%;
+            padding: 20px;
+            border-radius: 50%;
+            margin: 0px 10px;
+            border: 1px solid #f5f5dcd6;
+        }
+
+        .game-info > img:hover {
+            background-color: #f5f5dc39;
+        }
+
+        .choice {
+            width: 100%;
+            height: 170px;
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .choice > table {
+            border-collapse: collapse;
+        }
+
+        .choice td {
+            text-align: center;
+            padding: 5px 5px;
+            border: 1px solid #f5f5dcd6;
+        }
+
+        .choice td > img {
+            width: 50px;
+            padding: 20px;
+        }
+
+        .score {
+            width: 100%;
+            height: 80px;
+        
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .score > p {
+            padding: 5px 10px;
+            margin: 5px;
+            border: 1px solid #f5f5dcd6;
+        }
+
+        .poppins-light {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .poppins-regular {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .poppins-medium {
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 1.5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="game-container poppins-regular">
+        <h3 class="poppins-medium">Rock Papper Scissors</h3>
+        <div class="game-info">
+            <img src="./assets/rock-emoji.png" onclick="play('Rock')">
+            <img src="./assets/paper-emoji.png" onclick="play('Papper')">
+            <img src="./assets/scissors-emoji.png" onclick="play('Scissor')">
+        </div>
+        <p id="result" style="padding: 10px;">Processing...</p>
+        <div class="choice">
+            <table>
+                <tr>
+                    <td>You</td>
+                    <td>computer</td>
+                </tr>
+                <tr>
+                    <td><img id="your-choice" src="./assets/paper-emoji.png"/></td>
+                    <td><img id="computer-choice"src="./assets/paper-emoji.png"/></td>
+                </tr>
+            </table>
+        </div>
+        <div class="score">
+            <p class="scores">Wins : 0</p>
+            <p class="scores">Loses : 0</p>
+            <p class="scores">Ties : 0</p>
+        </div>
+
+        <script>
+
+            const score = {
+                wins : 0,
+                loses : 0,
+                ties : 0
+            }
+
+            function play(key) {
+                const yourChoice = key
+                const computerChoice = getRandom()
+
+                let result = ''
+                const obj1 = document.getElementById('your-choice')
+                const obj2 = document.getElementById('computer-choice')
+
+                if(yourChoice ==='Rock'){
+                    obj1.src = "./assets/rock-emoji.png"
+                    if(computerChoice === 'Paper'){
+                        obj2.src = "./assets/paper-emoji.png"
+                        result = 'Lose'
+                    }
+                    else if(computerChoice === 'Scissor'){
+                        obj2.src = "./assets/scissors-emoji.png"
+                        result = 'Win'
+                    }
+                    else{
+                        obj2.src = "./assets/rock-emoji.png"
+                        result="Tie"
+                    }
+                }
+
+                else if(yourChoice === 'Papper'){
+                    obj1.src = "./assets/paper-emoji.png"
+                    if(computerChoice === 'Scissor'){
+                        obj2.src = "./assets/scissors-emoji.png"
+                        result = 'Lose'
+                    }
+                    else if(computerChoice === 'Rock'){
+                        obj2.src = "./assets/rock-emoji.png"
+                        result = 'Win'
+                    }
+                    else {
+                        obj2.src = "./assets/paper-emoji.png"
+                        result="Tie"
+                    }
+                }
+
+                else {
+                    obj1.src = "./assets/scissors-emoji.png"
+                    if(computerChoice === 'Rock'){
+                        obj2.src = "./assets/rock-emoji.png"
+                        result = 'Lose'
+                    }
+                    else if(computerChoice === 'Paper'){
+                        obj2.src = "./assets/paper-emoji.png"
+                        result = 'Win'
+                    }
+                    else {
+                        obj2.src = "./assets/scissors-emoji.png"
+                        result="Tie"
+                    }
+                }
+
+                (result === 'Win') ? score.wins++ : (result === 'Lose') ? score.loses++ : score.ties++
+
+                document.getElementById('result').innerHTML = result
+                const scores = document.getElementsByClassName('scores')
+                scores[0].innerHTML = `Wins : ${score.wins}`
+                scores[1].innerHTML = `Loses : ${score.loses}`
+                scores[2].innerHTML = `Ties : ${score.ties}`
+
+            }
+
+            function getRandom() {
+                const i = Math.round(Math.random()*2)
+                const computerChoice = ['Rock', 'Papper', 'Scissor']
+                return computerChoice[i]
+            }
+        </script>
+    </div>
+</body>
+</html>
