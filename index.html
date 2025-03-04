@@ -13,7 +13,7 @@
             width: 100%;
             height: 100vh;
             background-color: #121212;
-            color: beige;
+            color: #ffffff;
 
             display: flex;
             flex-direction: column;
@@ -45,11 +45,11 @@
             padding: 20px;
             border-radius: 50%;
             margin: 0px 10px;
-            border: 1px solid #f5f5dcd6;
+            border: 1px solid #5b3d83;
         }
 
         .game-info > img:hover {
-            background-color: #f5f5dc39;
+            background-color: #5b3d83;
         }
 
         .choice {
@@ -69,7 +69,7 @@
         .choice td {
             text-align: center;
             padding: 5px 5px;
-            border: 1px solid #f5f5dcd6;
+            border: 1px solid #5b3d83;
         }
 
         .choice td > img {
@@ -79,7 +79,7 @@
 
         .score {
             width: 100%;
-            height: 80px;
+            height: 50px;
         
             display: flex;
             flex-direction: row;
@@ -87,10 +87,26 @@
             justify-content: center;
         }
 
-        .score > p {
+        .score > table {
+            border-collapse: collapse;
+        }
+
+        .score > table  td {
+            width: 70px;
             padding: 5px 10px;
             margin: 5px;
-            border: 1px solid #f5f5dcd6;
+            border: 1px solid #5b3d83;
+            text-align: center;
+        }
+
+        .reset-btn {
+            margin-top: 20px;
+            background-color:#ec574600;
+            border: none;
+            padding: 10px 20px;
+            color: beige;
+            background-color: #5b3d83;
+            border-radius: 5px;
         }
 
         .poppins-light {
@@ -116,13 +132,13 @@
 </head>
 <body>
     <div class="game-container poppins-regular">
-        <h3 class="poppins-medium">Rock Papper Scissors</h3>
+        <h3 class="poppins-medium" style="color:  #5b3d83;">Rock Papper Scissors</h3>
         <div class="game-info">
             <img src="./assets/rock-emoji.png" onclick="play('Rock')">
             <img src="./assets/paper-emoji.png" onclick="play('Papper')">
             <img src="./assets/scissors-emoji.png" onclick="play('Scissor')">
         </div>
-        <p id="result" style="padding: 10px;">Processing...</p>
+        <p id="result">-</p>
         <div class="choice">
             <table>
                 <tr>
@@ -136,18 +152,22 @@
             </table>
         </div>
         <div class="score">
-            <p class="scores">Wins : 0</p>
-            <p class="scores">Loses : 0</p>
-            <p class="scores">Ties : 0</p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td class="scores">Wins : 0</td>
+                        <td class="scores">Loses : 0</td>
+                        <td class="scores">Ties : 0</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        <button onclick="resetGame()" class="reset-btn">Reset</button>
 
         <script>
+            let score = !localStorage.getItem('score') ? {wins: 0, loses: 0, ties: 0}: JSON.parse(localStorage.getItem('score'))
+            console.log(JSON.parse(localStorage.getItem('score')))
 
-            const score = {
-                wins : 0,
-                loses : 0,
-                ties : 0
-            }
 
             function play(key) {
                 const yourChoice = key
@@ -213,6 +233,7 @@
                 scores[1].innerHTML = `Loses : ${score.loses}`
                 scores[2].innerHTML = `Ties : ${score.ties}`
 
+                localStorage.setItem('score', JSON.stringify(score))
             }
 
             function getRandom() {
@@ -220,6 +241,24 @@
                 const computerChoice = ['Rock', 'Papper', 'Scissor']
                 return computerChoice[i]
             }
+
+            function resetGame() {
+                localStorage.clear('score')
+                console.log('Reseted')
+                update()
+            }
+
+            function update() {
+                score = (!localStorage.getItem('score')) ? {wins: 0, loses: 0, ties: 0}: JSON.parse(localStorage.getItem('score'))
+                console.log(score)
+                document.getElementById('result').innerHTML = '-'
+                const scores = document.getElementsByClassName('scores')
+                scores[0].innerHTML = `Wins : ${score.wins}`
+                scores[1].innerHTML = `Loses : ${score.loses}`
+                scores[2].innerHTML = `Ties : ${score.ties}`
+            }
+
+            update()
         </script>
     </div>
 </body>
