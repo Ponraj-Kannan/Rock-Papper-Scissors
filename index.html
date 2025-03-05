@@ -111,6 +111,10 @@
             border: 1px solid #5b3d83;
         }
 
+        .reset-btn:hover {
+            background-color: #5b3d83;
+        }
+
         .poppins-light {
             font-family: "Poppins", sans-serif;
             font-weight: 300;
@@ -269,13 +273,12 @@
 
             function resetGame() {
                 localStorage.clear('score')
-                console.log('Reseted')
+                alert('Game reseted successfully')
                 update()
             }
 
             function update() {
                 score = (!localStorage.getItem('score')) ? {wins: 0, loses: 0, ties: 0}: JSON.parse(localStorage.getItem('score'))
-                console.log(score)
                 document.getElementById('result').innerHTML = '-'
                 const scores = document.getElementsByClassName('scores')
                 scores[0].innerHTML = `Wins : ${score.wins}`
