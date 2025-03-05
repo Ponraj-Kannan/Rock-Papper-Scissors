@@ -178,10 +178,15 @@
 
         <script>
             let score = !localStorage.getItem('score') ? {wins: 0, loses: 0, ties: 0}: JSON.parse(localStorage.getItem('score'))
+            let count = !localStorage.getItem('count') ? 0 : localStorage.getItem('count')
+
             console.log(JSON.parse(localStorage.getItem('score')))
+            console.log(localStorage.getItem('count'))
+
             let t1 = '', t2 = ''
 
             function play(key) {
+
                 let yourChoice = key
                 let computerChoice = getRandom()
 
@@ -201,6 +206,23 @@
                     t2 = ''
                 }
 
+
+                if(count == 4) {
+                    let {wins, loses, ties} = score
+                    if (wins > loses){
+                        alert('You win!')
+                    }
+                    else if(loses > wins){
+                        alert('You lose!')
+                    }
+                    else {
+                        alert('Tie!')
+                    }
+                    localStorage.clear('score')
+                    localStorage.clear('count')
+                    update()
+                    return
+                }
 
                 let result = ''
                 const obj1 = document.getElementById('your-choice')
@@ -255,6 +277,7 @@
                 }
 
                 (result === 'Win') ? score.wins++ : (result === 'Lose') ? score.loses++ : score.ties++
+                count++
 
                 document.getElementById('result').innerHTML = result
                 const scores = document.getElementsByClassName('scores')
@@ -263,6 +286,7 @@
                 scores[2].innerHTML = `Ties : ${score.ties}`
 
                 localStorage.setItem('score', JSON.stringify(score))
+                localStorage.setItem('count', count)
             }
 
             function getRandom() {
@@ -279,6 +303,8 @@
 
             function update() {
                 score = (!localStorage.getItem('score')) ? {wins: 0, loses: 0, ties: 0}: JSON.parse(localStorage.getItem('score'))
+                count = !localStorage.getItem('count') ? 0 : localStorage.getItem('count')
+
                 document.getElementById('result').innerHTML = '-'
                 const scores = document.getElementsByClassName('scores')
                 scores[0].innerHTML = `Wins : ${score.wins}`
