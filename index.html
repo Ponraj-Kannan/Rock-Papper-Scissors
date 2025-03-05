@@ -104,9 +104,7 @@
             background-color:#ec574600;
             border: none;
             padding: 10px 20px;
-            color: beige;
-            background-color: #5b3d83;
-            border-radius: 5px;
+            background-color: #fcfaffa3;
         }
 
         .poppins-light {
@@ -173,11 +171,28 @@
         <script>
             let score = !localStorage.getItem('score') ? {wins: 0, loses: 0, ties: 0}: JSON.parse(localStorage.getItem('score'))
             console.log(JSON.parse(localStorage.getItem('score')))
-
+            let t1 = '', t2 = ''
 
             function play(key) {
-                const yourChoice = key
-                const computerChoice = getRandom()
+                let yourChoice = key
+                let computerChoice = getRandom()
+
+                if(t1 == ''){
+                    t1 = computerChoice
+                }
+                else if (t1 == computerChoice && t2 == ''){
+                    t2 = computerChoice
+                }
+                else if(t1 == computerChoice && t2 == computerChoice){
+                    while(t1 == computerChoice){
+                        computerChoice = getRandom()
+                    }
+                }
+                else{
+                    t1 = ''
+                    t2 = ''
+                }
+
 
                 let result = ''
                 const obj1 = document.getElementById('your-choice')
@@ -185,7 +200,7 @@
 
                 if(yourChoice ==='Rock'){
                     obj1.src = "./assets/rock-emoji.png"
-                    if(computerChoice === 'Paper'){
+                    if(computerChoice === 'Papper'){
                         obj2.src = "./assets/paper-emoji.png"
                         result = 'Lose'
                     }
@@ -221,7 +236,7 @@
                         obj2.src = "./assets/rock-emoji.png"
                         result = 'Lose'
                     }
-                    else if(computerChoice === 'Paper'){
+                    else if(computerChoice === 'Papper'){
                         obj2.src = "./assets/paper-emoji.png"
                         result = 'Win'
                     }
